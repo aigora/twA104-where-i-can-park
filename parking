@@ -1,0 +1,196 @@
+#include<stdio.h>
+#include<stdlib.h>
+
+int n1=0, n2=0, n3=0;
+
+void llenado(int z, int pp[], int *x, int *y)
+{
+	int i, g, f, j = 0;
+
+	printf("Introduce el numero de plazas para personas discapacitadas .\n");
+	scanf_s("%d", x);
+	g = *x;
+	while (g > z)
+	{
+		printf("El numero de plazas que ha introducido supera el numero total de plazas , porfavor introduzca un numero de plazas menor o igual a las plazas asignadas .\n");
+		scanf_s("%d", x);
+		g = *x;
+	}
+	while (g < 0)
+	{
+		printf("El numero de plazas que ha introducido no es valido ,establezca un numero de plazas positivo .\n");
+		scanf_s("%d", x);
+		g = *x;
+	}
+	printf("Introduce el numero de plazas para vehiculos familiares .\n");
+	scanf_s("%d", y);
+	f = *y;
+	while (g + f > z)
+	{
+		printf("El numero de plazas que ha introducido supera el numero total de plazas , porfavor introduzca un numero de plazas menor o igual a las plazas asignadas .\n");
+		scanf_s("%d", y);
+		f = *y;
+	}
+	while (f < 0)
+	{
+		printf("El numero de plazas que ha introducido no es valido ,establezca un numero de plazas positivo .\n");
+		scanf_s("%d", y);
+		f = *y;
+	}
+	system("cls");
+
+	for (i = 0; i < g; i++)
+	{
+		pp[i] = 3;
+	}
+	for (i = g; i < f + g; i++)
+	{
+		pp[i] = 2;
+	}
+	for (i = g + f; i < z; i++)
+	{
+		pp[i] = 1;
+	}
+}
+int aparcamiento(int p[],int g,int x,int y,int resto)
+{
+	int v, i, n,b=x,m=y;
+
+
+	if (x > 0 && y > 0 && resto > 0)//Dependen de las plazas asignadas .
+	{
+		printf("\n\t\tSu coche , %cque sitio ocupa? .\n\t1 = comun .\n\t2 = familiares .\n\t3 = invalidos .\n",168);
+		scanf_s("%d", &v);
+		while (v < 1 || v>3)
+		{
+			printf("El numero que ha introducido no esta entre el tipo de sitios asignados , porfavor introduce un numero del tipo de sitios asignados .\n");
+			scanf_s("%d", &v);
+		}
+	}
+
+	if (x == 0 && y > 0 && resto > 0)//
+	{
+		printf("\n\t\tSu coche , %cque sitio ocupa? .\n\t1 = comun .\n\t2 = familiares .\n",168);
+		scanf_s("%d", &v);
+		while (v < 1 || v>2)
+		{
+			printf("El numero que ha introducido no esta entre el tipo de sitios asignados , intentelo de nuevo .\n");
+			scanf_s("%d", &v);
+		}
+	}
+	
+	if (x > 0 && y == 0 && resto > 0)// 
+	{
+		printf("\n\t\tSu coche , %cque sitio ocupa? .\n\t1 = comun .\n\t2 = invalidos .\n",168);
+		scanf_s("%d", &v);
+		while (v < 1 || v>2)
+		{
+			printf("El numero que ha introducido no esta entre el tipo de sitios asignados , intentelo de nuevo .\n");
+			scanf_s("%d", &v);
+		}
+		if (v == 2)
+			v = 3;
+	}
+
+	if (x > 0 && y > 0 && resto == 0)// 
+	{
+		printf("\n\t\tSu coche , %cque sitio ocupa? .\n\t1 = familiares .\n\t2 = invalidos .\n",168);
+		scanf_s("%d", &v);
+		while (v < 1 || v>2)
+		{
+			printf("El numero que ha introducido no esta entre el tipo de sitios asignados , intentelo de nuevo .\n");
+			scanf_s("%d", &v);
+		}
+		if (v == 2)
+			v = 3;
+		if (v == 1)
+			v = 2;
+		}
+	
+	if (x == 0 && y == 0 && resto > 0)// 
+	{
+		printf("\n\t\t\tEste parking es exclusivamente de sitios comunes .\n");
+		v = 1;
+		system("PAUSE");
+	}
+	if (x > 0 && y == 0 && resto == 0)// 
+	{
+		printf("\n\t\t\tEste parking es exclusivamente para invalidos .\n");
+		v = 3;
+		system("PAUSE");
+	}
+	if (x == 0 && y > 0 && resto == 0)// 
+	{
+		printf("\n\t\t\tEste parking es exclusivamente para vehiculos de familia .\n");
+		v = 2;
+		system("PAUSE");
+	}
+
+	if (n3 == x && v == 3)
+	{
+		printf("No hay sitios disponibles , pero puede aparcar en un sitio normal .\n");
+		system("PAUSE");
+		return 0;
+	}
+	if (n2 == y && v == 2)
+	{
+		printf("No hay sitios disponibles , pero puede aparcar en un sitio normal .\n");
+		system("PAUSE");
+		return 0;
+	}
+	if (n1 == resto && v == 1)
+	{
+		printf("No hay sitios disponibles , lo sentimos mucho .\n");
+		system("PAUSE");
+		return 0;
+	}
+	for (i = 0; i < g; i++)
+	{		
+		if (p[i] == v)
+		{
+			if (v == 3)
+			{
+				n3++;
+			}
+			if (v == 2)
+			{
+				n2++;
+			}
+			if (v == 1)
+			{
+				n1++;
+			}
+			n = i + 1;
+			p[i] = 0;
+			return n;
+		}
+	}
+}
+
+int main()
+{
+	int *p,N,n=0,x,y,resto,i;
+	
+	printf("Introduce el numero de plazas .\n");
+	scanf_s("%d", &N);
+	p = malloc(N * sizeof(int));
+	llenado(N, p, &x,&y);
+	resto = N - x - y;
+	for(i=0;i<N;i++)
+	{
+		n=aparcamiento(p,N,x,y,resto);
+		if (n != 0)
+		{
+			printf("\t\tSu sitio es el numero %d .\n\n", n);
+			system("PAUSE");
+			system("cls");
+		}		
+		else
+		{
+			i--;
+			system("cls");
+		}
+	}
+	printf("\n\n\t\t\tTodas las plazas de este parking estan ocupadas , lo sentimos mucho .\n\n\n");
+	system("PAUSE");
+}
